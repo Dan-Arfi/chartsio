@@ -7,12 +7,14 @@
       <input id="my-drawer" type="checkbox" class="drawer-toggle" checked />
       <div class="drawer-content">
         <!-- Page content here -->
-        <div class="w-full flex justify-center">
+        <div class="w-full flex justify-center items-center">
           <label
             for="my-drawer"
             class="btn btn-primary m-4 drawer-button px-10 text-center"
             >edit chart</label
           >
+          <!-- <button class=" btn btn-info" @click="renderChart">randomize</button> -->
+          
         </div>
         <button
           @click="exportData"
@@ -20,8 +22,14 @@
         >
           Export
         </button>
-        <div class="p-4">
-          <canvas ref="myChart" class="mt-5" style="max-width: 100%"></canvas>
+        <div class="w-full flex justify-center">
+            <div class="p-4 chart-container w-full  max-w-xl">
+          <canvas
+            ref="myChart"
+            class="mb-20"
+            
+          ></canvas>
+        </div>
         </div>
       </div>
       <div class="drawer-side">
@@ -133,7 +141,7 @@
           
             <div class="w-full flex justify-center">
                 <button class="btn w-full btn-primary" @click="addNewColumn">
-                  new column
+                  new slice
                 </button>
             </div>
           
@@ -147,40 +155,38 @@
 import Chart from "chart.js/auto";
 import * as FileSaver from "file-saver";
 
-// import * as XLSX from "xlsx";
-
 export default {
-  name: "InteractiveChart",
+  name: "InteractivePieChart",
   data() {
     return {
       chartData: [
         {
-          label: "col 1",
+          label: "slice 1",
           value: Math.round(Math.random() * 20 + 1),
           backgroundColor: "rgba(255, 99, 132)",
         },
         {
-          label: "col 2",
+          label: "slice 2",
           value: Math.round(Math.random() * 20 + 1),
           backgroundColor: "rgba(54, 162, 235)",
         },
         {
-          label: "col 3",
+          label: "slice 3",
           value: Math.round(Math.random() * 20 + 1),
           backgroundColor: "rgba(255, 206, 86)",
         },
         {
-          label: "col 4",
+          label: "slice 4",
           value: Math.round(Math.random() * 20),
-          backgroundColor: "rgba(75, 192, 192",
+          backgroundColor: "rgba(75, 192, 192)",
         },
         {
-          label: "col 5",
+          label: "slice 5",
           value: Math.round(Math.random() * 20),
           backgroundColor: "rgba(153, 102, 255)",
         },
       ],
-      newColumnName: "col 6",
+      newColumnName: "slice 6",
       newColumnColor: "rgba(255, 159, 64)",
 
       colors: [
@@ -189,19 +195,16 @@ export default {
         "#e9c46a",
         "#f4a261",
         "#e76f51",
-
         "#e63946",
         "#f1faee",
         "#a8dadc",
         "#457b9d",
         "#1d3557",
-
         "#335c67",
         "#fff3b0",
         "#e09f3e",
         "#9e2a2b",
         "#540b0e",
-
         "#283d3b",
         "#197278",
         "#edddd4",
@@ -243,7 +246,6 @@ export default {
       });
 
       // Create a Blob and export the file
-      //   const encodedUri = encodeURI(csvContent);
       const blob1 = new Blob([csvContent]);
       FileSaver.saveAs(blob1, "chart.csv");
     },
@@ -255,42 +257,24 @@ export default {
     renderChart() {
       const ctx = this.$refs.myChart.getContext("2d");
       this.chart = new Chart(ctx, {
-        type: "bar",
+        type: "pie",
         data: {
           labels: this.chartData.map((data) => data.label),
           datasets: [
             {
-              label: "# of Votes",
+              label: "Population",
               data: this.chartData.map((data) => data.value),
-              backgroundColor: [
-                "rgba(255, 99, 132)", // Change this to the desired color
-                "rgba(54, 162, 235)",
-                "rgba(255, 206, 86)",
-                "rgba(75, 192, 192",
-                "rgba(153, 102, 255)",
-                "rgba(255, 159, 64)",
-              ],
-              borderColor: [
-                "rgba(255, 99, 132, 1)", // Change this to the desired color
-                "rgba(54, 162, 235, 1)",
-                "rgba(255, 206, 86, 1)",
-                "rgba(75, 192, 192, 1)",
-                "rgba(153, 102, 255, 1)",
-                "rgba(255, 159, 64, 1)",
-              ],
-              borderWidth: 0,
+              backgroundColor: this.chartData.map(
+                (data) => data.backgroundColor
+              ),
+              borderWidth: 1,
             },
           ],
         },
         options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
           plugins: {
             legend: {
-              display: false, // Hide the legend
+              display: false,
             },
           },
         },
@@ -298,10 +282,10 @@ export default {
     },
 
     updateChart() {
+      this.chart.data.labels = this.chartData.map((data) => data.label);
       this.chart.data.datasets[0].data = this.chartData.map(
         (data) => data.value
       );
-      this.chart.data.labels = this.chartData.map((data) => data.label);
       this.chart.data.datasets[0].backgroundColor = this.chartData.map(
         (data) => data.backgroundColor
       );
@@ -314,7 +298,7 @@ export default {
           value: Math.round(Math.random() * 20 + 1),
           backgroundColor: this.newColumnColor,
         });
-        this.newColumnName = "col " + (this.chartData.length + 1).toString();
+        this.newColumnName = "slice " + (this.chartData.length + 1).toString();
         this.updateChart();
       }
     },
@@ -332,3 +316,5 @@ export default {
   },
 };
 </script>
+
+
