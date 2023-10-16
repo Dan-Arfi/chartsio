@@ -36,7 +36,31 @@
         <ul
           class="menu p-4 w-sm max-w-sm min-w-sm min-h-full bg-base-200 text-base-content z-[1]"
         >
-          
+          <div class="bg-dark flex justify-end">
+            <button
+              type="button"
+              aria-controls="my-drawer"
+              class="bg-error text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 top-2.5 right-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white"
+              @click="closeDrawer"
+            >
+              <svg
+                class="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span class="sr-only">Close menu</span>
+            </button>
+          </div>
           <div v-for="(bubble, index) in bubbleChartData" :key="index">
             <div class="w-full flex flex-row m-0 p-0 py-2">
               <div class="flex items-center join">
@@ -84,10 +108,10 @@
             </div>
           </div>
           <div class="w-full flex justify-center">
-                <button class="btn w-full btn-primary" @click="addNewBubble">
-                  new bubble
-                </button>
-            </div>
+            <button class="btn w-full btn-primary" @click="addNewBubble">
+              new bubble
+            </button>
+          </div>
         </ul>
       </div>
     </div>
@@ -150,6 +174,12 @@ export default {
     this.renderBubbleChart();
   },
   methods: {
+    closeDrawer() {
+      const drawer = document.getElementById("my-drawer");
+      if (drawer.checked) {
+        drawer.checked = false;
+      }
+    },
     renderBubbleChart() {
       const ctx = this.$refs.myBubbleChart.getContext("2d");
       this.bubbleChart = new Chart(ctx, {
@@ -220,4 +250,3 @@ export default {
   },
 };
 </script>
-

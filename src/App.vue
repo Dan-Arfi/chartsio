@@ -17,7 +17,7 @@ const routes = {
   "/line": Line,
 };
 
-usehe;
+
 
 const currentPath = ref(window.location.hash);
 
