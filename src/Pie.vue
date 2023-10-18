@@ -154,9 +154,21 @@
 <script>
 import Chart from "chart.js/auto";
 import * as FileSaver from "file-saver";
-
+import { useHead } from "@vueuse/head";
 export default {
   name: "InteractivePieChart",
+
+  setup() {
+    useHead({
+      title: "Generate Pie chart | chartsio",
+      meta: [
+        {
+          name: "description",
+          content: "generate beautiful pie chart in seconds",
+        },
+      ],
+    });
+  },
   data() {
     return {
       chartData: [

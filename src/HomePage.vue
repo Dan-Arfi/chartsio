@@ -53,7 +53,7 @@
           <div
             class="w-screen flex-col flex justify-evenly mx-0 px-0 items-center md:flex-row"
           >
-            <a href="#/bars" class="mb-5 mx-0 px-0">
+            <a href="#/bar" class="mb-5 mx-0 px-0">
               <div
                 class="card card-compact w-96 bg-base-100 shadow-xl border-transparent border-4 hover:border-primary"
               >
@@ -160,5 +160,13 @@
 <script>
 export default {
   name: "App",
+  metaInfo: {
+      title: 'My Example App',
+      titleTemplate: '%s - Yay!',
+      htmlAttrs: {
+        lang: 'en',
+        amp: true
+      }
+    }
 };
 </script>

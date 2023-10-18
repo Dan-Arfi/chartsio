@@ -148,9 +148,21 @@
 <script>
 import Chart from "chart.js/auto";
 import * as FileSaver from "file-saver";
+import { useHead } from "@vueuse/head";
 
 export default {
   name: "InteractivePieChart",
+  setup() {
+    useHead({
+      title: "Generate Doughnut chart | chartsio",
+      meta: [
+        {
+          name: "description",
+          content: "generate beautiful doughnut chart in seconds",
+        },
+      ],
+    });
+  },
   data() {
     return {
       chartData: [

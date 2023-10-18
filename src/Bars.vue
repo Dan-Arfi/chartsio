@@ -130,13 +130,12 @@
               </div>
             </div>
           </li>
-          
-            <div class="w-full flex justify-center">
-                <button class="btn w-full btn-primary" @click="addNewColumn">
-                  new column
-                </button>
-            </div>
-          
+
+          <div class="w-full flex justify-center">
+            <button class="btn w-full btn-primary" @click="addNewColumn">
+              new column
+            </button>
+          </div>
         </ul>
       </div>
     </div>
@@ -146,11 +145,23 @@
 <script>
 import Chart from "chart.js/auto";
 import * as FileSaver from "file-saver";
-
-// import * as XLSX from "xlsx";
+import { useHead } from "@vueuse/head";
 
 export default {
   name: "InteractiveChart",
+
+  setup() {
+    useHead({
+      title: "Generate Bar chart | chartsio",
+      meta: [
+        {
+          name: "description",
+          content: "generate beautiful bar chart in seconds",
+        },
+      ],
+    });
+  },
+
   data() {
     return {
       chartData: [
